@@ -3,8 +3,11 @@
 </div>
 
 <div class="row">
-    <button type="button" class="btn btn-light" (click) = "onClickViewButton()">
+    <button type="button" class="btn btn-light" (click)="onClickViewButton()">
             {{viewUntrashed == true ? 'Show Trashed Messages' : 'Show Untrashed messages' }}</button>
+        <button type="button" class="btn btn-light" (click)="onClickSortButton()" style="margin-left: 5px;">
+                Sort Messages
+        </button>
 </div>
 
 <ul class="list-group row">

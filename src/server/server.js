@@ -41,7 +41,6 @@ app.get("/get/star", function(req , res){
 
 app.get("/get/messages", function(req, res) {
   var query = "select * from message";
-  console.log()
   executeQuery(query, res);  
 })
 
@@ -65,6 +64,15 @@ app.put("/put/trashstatus", function(req, res) {
   `;
   executeQuery(query, res);
 });
+
+app.put("/put/sort", function(req, res) {
+  var query = `
+  select * from message order by score desc
+  `;
+  console.log("query sorted records");
+  executeQuery(query, res);
+});
+
 
 function createDB() {
   con.query("DROP DATABASE IF EXISTS message_viewer", function (err, result) {

@@ -1,9 +1,9 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
  
 @Component({
-  selector: 'message-selector',
-  templateUrl: './message.component.html',
-  styleUrls: ['./message.component.css']
+    selector: 'message-selector',
+    templateUrl: './message.component.html',
+    styleUrls: ['./message.component.css']
 })
 export class MessageComponent {
     @Input() userid: string;

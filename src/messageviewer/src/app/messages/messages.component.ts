@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { MessagesService } from './messages.service'
  
 @Component({
-  selector: 'messages-selector',
-  templateUrl: './messages.component.html',
-  providers: [MessagesService],
-  styleUrls: ['./messages.component.css']
+    selector: 'messages-selector',
+    templateUrl: './messages.component.html',
+    providers: [MessagesService],
+    styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent {
     messages = [];
@@ -20,17 +20,21 @@ export class MessagesComponent {
     updateMessages() {
         this.messagesService.getMessages().subscribe(result => {
             console.log (result);
-            this.messages = [];
-            for (var i = 0; i < Object.keys(result).length; i++) {
-                result[i].timestamp = new Date(result[i].timestamp).toLocaleString('en-us', { 
-                    month: 'long', day: '2-digit', year: 'numeric'});
-                this.messages.push(result[i]);
-            }
+            this.insertMessages(result);
             
         }, error => {
             console.log("Get Messages Failed: ", error);
         }
         );
+    }
+
+    insertMessages(result : any) {
+        this.messages = [];
+        for (var i = 0; i < Object.keys(result).length; i++) {
+            result[i].timestamp = new Date(result[i].timestamp).toLocaleString('en-us', { 
+                month: 'long', day: '2-digit', year: 'numeric'});
+            this.messages.push(result[i]);
+        }
     }
 
     updateStarCount() {
@@ -64,5 +68,13 @@ export class MessagesComponent {
 
     onClickViewButton() {
         this.viewUntrashed = !this.viewUntrashed;
+    }
+
+    onClickSortButton() {
+        this.messagesService.putSort().subscribe(result => {
+            this.insertMessages(result);
+        }, error=> {
+            console.log("Sort Messages Failed: ", error);
+        })
     }
 }

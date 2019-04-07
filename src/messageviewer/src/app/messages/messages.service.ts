@@ -32,4 +32,9 @@ export class MessagesService {
             "istrashed": jsondata.istrashed
         })       
     }
+
+    putSort() {
+        return this.http.put('/api/put/sort', {
+        });
+    }
 }
