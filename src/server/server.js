@@ -1,9 +1,13 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var fs = require('fs');
 var initial_data = "../../messages.json"
 
 var app = express();
+app.use(bodyParser.json());       // use body-parser to parse request body json
+app.use(bodyParser.urlencoded({ extended : false}));
+
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -12,7 +16,7 @@ var con = mysql.createConnection({
 });
 
 /* 
-Connect to db
+Connect to mysql
 */
 con.connect(function(err) {
   if (err) throw err;
@@ -30,19 +34,44 @@ con.connect(function(err) {
 /*
 Get APIs
 */
-app.get("/star/getstar", function(req , res){
+app.get("/get/star", function(req , res){
   var query = "select count(*) as starCount from message where isStarred = 1";
   executeQuery(query, res);
 });
 
-app.get("/messages/get", function(req, res) {
+app.get("/get/messages", function(req, res) {
   var query = "select * from message";
+  console.log()
   executeQuery(query, res);  
 })
 
+/*
+Put APIs
+*/
+app.put("/put/starstatus", function(req, res) {
+  console.log(req.body);
+  var query = `
+  update message set isstarred = ${req.body.isstarred}
+  where userid = ${req.body.userid}
+  `;
+  executeQuery(query, res);
+})
+
+app.put("/put/trashstatus", function(req, res) {
+  console.log(req.body);
+  var query = `
+  update message set istrashed = ${req.body.istrashed}
+  where userid = ${req.body.userid}
+  `;
+  executeQuery(query, res);
+});
 
 function createDB() {
-  con.query("CREATE DATABASE IF NOT EXISTS message_viewer", function (err, result) {
+  con.query("DROP DATABASE IF EXISTS message_viewer", function (err, result) {
+    if (err) throw err;
+    console.log("Database dropped");
+  });
+  con.query("CREATE DATABASE message_viewer", function (err, result) {
     if (err) throw err;
     console.log("Database created");
   });

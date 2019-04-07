@@ -1,10 +1,41 @@
-<div *ngFor="let message of messages">
-    <message-selector 
-    [avatar] = "message.avatar"
-    [handle] = "message.handle"
-    [source] = "message.source"
-    [timestamp] = "message.timestamp"
-    [content] = "message.content"
-    [starred] = "message.starred"
-    >  </message-selector>
+<div class="row">
+        Starred: {{starCount}}
 </div>
+
+<div class="row">
+    <button type="button" class="btn btn-light" (click) = "onClickViewButton()">
+            {{viewUntrashed == true ? 'Show Trashed Messages' : 'Show Untrashed messages' }}</button>
+</div>
+
+<ul class="list-group row">
+    <div *ngFor="let message of messages" style="display: table-row;">
+        <li class="list-group-item list-entry-container" *ngIf="viewUntrashed && !message.istrashed">
+            <message-selector 
+            [userid] = "message.userid"
+            [avatar] = "message.avatar"
+            [handle] = "message.handle"
+            [source] = "message.source"
+            [timestamp] = "message.timestamp"
+            [content] = "message.content"
+            [isStarred] = "message.isstarred"
+            (onStarStatusChange)="StarStatusChanged($event)"
+            (onTrashMessage)="TrashMessage($event)"
+            >  </message-selector>
+        </li>
+        <li class="list-group-item list-entry-container" *ngIf="!viewUntrashed && message.istrashed">
+                <message-selector 
+                [userid] = "message.userid"
+                [avatar] = "message.avatar"
+                [handle] = "message.handle"
+                [source] = "message.source"
+                [timestamp] = "message.timestamp"
+                [content] = "message.content"
+                [isStarred] = "message.isstarred"
+                [isTrashed] = "message.istrashed"
+                (onStarStatusChange)="StarStatusChanged($event)"
+                (onTrashMessage)="TrashMessage($event)"
+                >  </message-selector>
+            </li>
+    </div>
+
+</ul>

@@ -1,0 +1,15 @@
+.list-entry-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+ul {
+    display: table;
+    border: 1px;
+    width: 100%;
+}
+
+.row {
+    margin: 10px 0 10px 0;
+    width: 100%;
+}

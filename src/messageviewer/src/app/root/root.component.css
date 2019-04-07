@@ -1,0 +1,33 @@
+.rowscontainer {
+    display: flex;
+    flex-wrap: wrap;
+    direction: column;
+}
+
+.header {
+    background-color: #eee;
+}
+
+.body {
+    padding: 0 20 20 20;
+}
+.row{
+    width: 100%;
+    margin: 0;
+}
+
+.columnsContainer {
+    display: flex;
+    direction: row;
+}
+
+.column {
+    width: 50%;
+}
+
+.title {
+    float: right;
+    font-size: 18px;
+    color: gray;
+    line-height: 30px;
+}
