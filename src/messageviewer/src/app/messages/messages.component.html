@@ -3,10 +3,17 @@
 </div>
 
 <div class="row">
-    <button type="button" class="btn btn-light" (click)="onClickViewButton()">
-            {{viewUntrashed == true ? 'Show Trashed Messages' : 'Show Untrashed messages' }}</button>
+        <button type="button" class="btn btn-light" (click)="onClickViewButton()">
+                {{viewUntrashed == true ? 'Show Trashed Messages' : 'Show Untrashed messages' }}</button>
         <button type="button" class="btn btn-light" (click)="onClickSortButton()" style="margin-left: 5px;">
                 Sort Messages
+        </button>
+</div>
+
+<div class="row">
+        <input type="text" class="form-control input" placeholder="Search some text here..." [(ngModel)]="input">
+        <button type="button" class="btn btn-primary" (click)="onClickSearchButton()" style="margin-left: 5px">
+                Submit
         </button>
 </div>
 
@@ -21,6 +28,7 @@
             [timestamp] = "message.timestamp"
             [content] = "message.content"
             [isStarred] = "message.isstarred"
+            [query] = "message.query"
             (onStarStatusChange)="StarStatusChanged($event)"
             (onTrashMessage)="TrashMessage($event)"
             >  </message-selector>

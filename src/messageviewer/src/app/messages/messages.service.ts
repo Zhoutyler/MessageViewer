@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
  
 @Injectable()
 export class MessagesService {
@@ -37,4 +37,12 @@ export class MessagesService {
         return this.http.put('/api/put/sort', {
         });
     }
+
+    getMatchedID(str : string) {
+        let params = new HttpParams().set('search', str);
+        return this.http.get('/api/get/highlight', {
+            params: params
+        });
+    }
+
 }

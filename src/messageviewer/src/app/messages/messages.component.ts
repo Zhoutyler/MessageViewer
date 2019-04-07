@@ -11,6 +11,7 @@ export class MessagesComponent {
     messages = [];
     starCount;
     viewUntrashed = true;
+    input = "";
 
     constructor(private messagesService : MessagesService) {
         this.updateMessages();
@@ -33,6 +34,7 @@ export class MessagesComponent {
         for (var i = 0; i < Object.keys(result).length; i++) {
             result[i].timestamp = new Date(result[i].timestamp).toLocaleString('en-us', { 
                 month: 'long', day: '2-digit', year: 'numeric'});
+            result[i].query = "";
             this.messages.push(result[i]);
         }
     }
@@ -69,12 +71,31 @@ export class MessagesComponent {
     onClickViewButton() {
         this.viewUntrashed = !this.viewUntrashed;
     }
-
+    
     onClickSortButton() {
         this.messagesService.putSort().subscribe(result => {
             this.insertMessages(result);
         }, error=> {
             console.log("Sort Messages Failed: ", error);
+        });
+    }
+    
+    
+    onClickSearchButton() {
+        this.messagesService.getMatchedID(this.input).subscribe(result => {
+            for (var i = 0; i < this.messages.length; i++) {
+                for (var j = 0; j < Object.keys(result).length; j++) {
+                    if (this.messages[i].userid == result[j].userid) {
+                        this.messages[i].query = this.input;
+                        break;
+                    }
+                }
+                if (this.messages[i].query != this.input)
+                    this.messages[i].query = "";
+            }
+            console.log(result);
+        }, error => {
+            console.log("Search Failed: ", error);
         })
     }
 }

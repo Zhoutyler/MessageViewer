@@ -44,6 +44,14 @@ app.get("/get/messages", function(req, res) {
   executeQuery(query, res);  
 })
 
+app.get("/get/highlight", function(req, res) {
+  console.log(req.query.search);
+  var query = `
+  select userid from message where content REGEXP '.*${req.query.search}.*'
+  `;
+  executeQuery(query, res);
+});
+
 /*
 Put APIs
 */

@@ -14,9 +14,11 @@ export class MessageComponent {
     @Input() content : string;
     @Input() isStarred : boolean;
     @Input() isTrashed: boolean;
+    @Input() query: string;   // for highlighting text
     @Output() onStarStatusChange = new EventEmitter<any>();
     @Output() onTrashMessage = new EventEmitter<any>();
-
+    // query = "Iste";
+    
     constructor(){}
 
     onClickStarButton() {
@@ -36,6 +38,15 @@ export class MessageComponent {
       }
       this.onTrashMessage.emit(jsondata);
     }
+
+    highlight() {
+      if (!this.query)
+        return this.content;
+      return this.content.replace(new RegExp(this.query, "gi"), match=>{
+        return '<span class="highlighted-text">' + match + '</span>';
+      });
+    }
+
 }
 
 

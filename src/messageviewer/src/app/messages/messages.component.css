@@ -13,3 +13,8 @@ ul {
     margin: 10px 0 10px 0;
     width: 100%;
 }
+
+.input {
+    float: left;
+    width: 25.5%;
+}

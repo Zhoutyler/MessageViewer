@@ -36,3 +36,7 @@
     background-color: #f4b342;
     color: #ffffff;
 }
+
+:host ::ng-deep .highlighted-text {
+    background: yellow;
+}
